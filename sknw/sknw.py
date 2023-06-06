@@ -76,6 +76,32 @@ def trace(img, p, nbs, acc, buf):
         if c2!=0:break
     return (c1-10, c2-10, idx2rc(buf[:cur+1], acc))
    
+@jit(nopython=True) # parse the image then get the nodes
+def parse_nodes(img, pts, nbs, acc):
+    img = img.ravel()
+    buf = np.zeros(131072, dtype=np.int64)
+    num = 10
+    nodes = []
+    for p in pts:
+        if img[p] == 2:
+            nds = fill(img, p, num, nbs, acc, buf)
+            num += 1
+            nodes.append(nds)
+    return nodes
+
+
+@jit(nopython=True) # parse the image then get the edges
+def parse_edges(img, pts, nbs, acc):
+    img = img.ravel()
+    buf = np.zeros(131072, dtype=np.int64)
+    edges = []
+    for p in pts:
+        for dp in nbs:
+            if img[p+dp]==1:
+                edge = trace(img, p+dp, nbs, acc, buf)
+                edges.append(edge)
+    return edges
+    
 @jit(nopython=True) # parse the image then get the nodes and edges
 def parse_struc(img, nbs, acc, iso, ring):
     img = img.ravel()
