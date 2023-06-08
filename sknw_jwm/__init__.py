@@ -1,8 +1,8 @@
-from .sknw_jwm import mark, parse_struc, build_graph, draw_graph, build_sknw, parse_nodes
+from .sknw_jwm import mark, parse_struc, build_graph, draw_graph, build_sknw, parse_nodes,neighbors
 
 __version__ = '0.1'
 
-__all__ = ['mark', 'parse_struc', 'build_graph', 'draw_graph', 'build_sknw','parse_nodes']
+__all__ = ['mark', 'parse_struc', 'build_graph', 'draw_graph', 'build_sknw','parse_nodes','neighbors']
 
 
 def test():
